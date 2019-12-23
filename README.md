@@ -297,10 +297,10 @@ https://wi.sbis.ru/doc/platform/developmentapl/interface-development/ui-library/
 		```
 ---
 10. Какая запись является верной
-	- <Example bind:variable='_options.variable'>
-	- `<Example bind:variable='_variable'>`
-	- <Example binds:variable='_options.variable'>
-	- <Example binds:variable='_variable'>
+	- < Example bind:variable='_options.variable' />
+	- `<Example bind:variable='_variable' />`
+	- < Example binds:variable='_options.variable' />
+	- < Example binds:variable='_variable' /> 
 
 ---
 11. На что можно ссылаться при обратном биндинге
