@@ -21,7 +21,7 @@ https://wi.sbis.ru/doc/platform/developmentapl/interface-development/ui-library/
 
 ---
 3. Что является сигналом к началу синхронизации !!!
-	+ изменение опции + 
+	+ `изменение опции` 
 	- изменение реактивного свойства
 	- вызов _startSync()
 	- вызов _forceUpdate()
