@@ -57,7 +57,7 @@ https://wi.sbis.ru/doc/platform/developmentapl/interface-development/ui-library/
   
 ---
 8. Выберите правильный вариант настройки синхронизации опций _text после вызова _changeText()
-	 - Example.wml
+	 - `Example.wml`
 		 ```HTML
 		<div>
 			<div>
@@ -245,3 +245,54 @@ https://wi.sbis.ru/doc/platform/developmentapl/interface-development/ui-library/
 		}
 		export = Children;
 		```
+
+---
+9. В каком файле допущена ошибка при реализации синхронизации
+ 	- Example.wml
+		 ```HTML
+		<div>
+			<div>
+				{{ _text }}
+			</div>
+			<div on:click="_changeText()">
+				Сменить текст
+			</div>
+			<Children text="{{ _text }}"/>
+		</div>
+		```
+	- Example.ts
+		```TypeScript
+		import { Control, TemplateFunction, IControlOptions } from 'UI/Base';
+		import template = require('wml!Example');
+
+		class Example {
+			public _template: TemplateFunction = template;
+			private _text: string;
+
+			public _beforeMount() {
+				this._text = 'Mounted';
+			};
+
+			public _changeText() {
+				this._text = 'Changed';
+			};
+		}
+		export = Example;
+		```
+	- Children.wml
+		```HTML
+		<div>
+			{{ _options.text }}
+		</div>
+		```
+	- Children.ts
+		```TypeScript
+		import { Control, TemplateFunction, IControlOptions } from 'UI/Base';
+		import template = require('wml!UIDemo/SyncTest/Children');
+
+		class Children extends Control<IControlOptions> {
+		   public _template: TemplateFunction = template;
+		}
+		export = Children;
+		```
+
