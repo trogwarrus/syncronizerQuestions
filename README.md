@@ -1,3 +1,11 @@
+# Вопросы по синхронизатору 
+
+```
+материалы
+https://wi.sbis.ru/doc/platform/application-debugging/js/doc-wasaby-dev-tools/
+https://wi.sbis.ru/doc/platform/developmentapl/interface-development/ui-library/options
+```
+
 1. Синхронизация по сути является?
 	+ перерисовкой элементов на странице
 	- обновлением shadow-DOM
