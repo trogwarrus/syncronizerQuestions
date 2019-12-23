@@ -279,10 +279,10 @@ https://wi.sbis.ru/doc/platform/developmentapl/interface-development/ui-library/
 		}
 		export = Example;
 		```
-	- Children.wml
+	- `Children.wml`
 		```HTML
 		<div>
-			{{ _options.text }}
+			{{ options.text }}
 		</div>
 		```
 	- Children.ts
