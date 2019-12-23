@@ -198,7 +198,7 @@ https://wi.sbis.ru/doc/platform/developmentapl/interface-development/ui-library/
 		}
 		export = Children;
 		```
-			 - Example.wml
+	 - Example.wml
 		 ```HTML
 		<div>
 			<div>
