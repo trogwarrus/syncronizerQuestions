@@ -97,7 +97,7 @@ https://wi.sbis.ru/doc/platform/developmentapl/interface-development/ui-library/
 		Children.ts
 		```TypeScript
 		import { Control, TemplateFunction, IControlOptions } from 'UI/Base';
-		import template = require('wml!UIDemo/SyncTest/Children');
+		import template = require('wml!Children');
 
 		class Children extends Control<IControlOptions> {
 		   public _template: TemplateFunction = template;
@@ -144,7 +144,7 @@ https://wi.sbis.ru/doc/platform/developmentapl/interface-development/ui-library/
 		Children.ts
 		```TypeScript
 		import { Control, TemplateFunction, IControlOptions } from 'UI/Base';
-		import template = require('wml!UIDemo/SyncTest/Children');
+		import template = require('wml!Children');
 
 		class Children extends Control<IControlOptions> {
 		   public _template: TemplateFunction = template;
@@ -191,7 +191,7 @@ https://wi.sbis.ru/doc/platform/developmentapl/interface-development/ui-library/
 		Children.ts
 		```TypeScript
 		import { Control, TemplateFunction, IControlOptions } from 'UI/Base';
-		import template = require('wml!UIDemo/SyncTest/Children');
+		import template = require('wml!Children');
 
 		class Children extends Control<IControlOptions> {
 		   public _template: TemplateFunction = template;
@@ -238,7 +238,7 @@ https://wi.sbis.ru/doc/platform/developmentapl/interface-development/ui-library/
 		Children.ts
 		```TypeScript
 		import { Control, TemplateFunction, IControlOptions } from 'UI/Base';
-		import template = require('wml!UIDemo/SyncTest/Children');
+		import template = require('wml!Children');
 
 		class Children extends Control<IControlOptions> {
 		   public _template: TemplateFunction = template;
@@ -288,7 +288,7 @@ https://wi.sbis.ru/doc/platform/developmentapl/interface-development/ui-library/
 	- Children.ts
 		```TypeScript
 		import { Control, TemplateFunction, IControlOptions } from 'UI/Base';
-		import template = require('wml!UIDemo/SyncTest/Children');
+		import template = require('wml!Children');
 
 		class Children extends Control<IControlOptions> {
 		   public _template: TemplateFunction = template;
@@ -298,9 +298,10 @@ https://wi.sbis.ru/doc/platform/developmentapl/interface-development/ui-library/
 ---
 10. Какая запись является верной
 	- < Example bind:variable='_options.variable' />
-	- `<Example bind:variable='_variable' />`
+	- `< Example bind:variable='_variable' />`
 	- < Example binds:variable='_options.variable' />
 	- < Example binds:variable='_variable' /> 
+	- `< Example bind:variable='_options.record._variable' />`
 
 ---
 11. На что можно ссылаться при обратном биндинге
@@ -310,6 +311,223 @@ https://wi.sbis.ru/doc/platform/developmentapl/interface-development/ui-library/
 	- нет ограничений, ссылаться можно абсолютно на все
 	
 ---
-12. Выберите правльный вариант использования синхронизации опций, если
+12. Выберите правильный вариант использования двухсторонней синхронизации опций, если
+	Example.wml
+	```HTML
+	<div>
+		<div>
+			{{ _text }}
+		</div>
+		<div on:click="_changeText()">
+			Сменить текст
+		</div>
+		<Children bind:text="_text"/>
+	</div>
+	```
+	Example.ts
+	```TypeScript
+	import { Control, TemplateFunction, IControlOptions } from 'UI/Base';
+	import template = require('wml!Example');
+
+	class Example extends Control<IControlOptions> {
+	   public _template: TemplateFunction = template;
+	   private _text: string;
+
+	   public _beforeMount() {
+		 this._text = 'Mounted';
+	   };
+
+	   public _changeText() {
+		  this._text = 'Changed';
+	   };
+	}
+
+	export = Example;
+	```
 	
-	
+	- Children.wml
+		```HTML
+		<div>
+			<div>
+				{{ _options.text }}
+			</div>
+			<div bind:click="_revertText()">
+				Вернуть текст
+			</div>
+		</div>
+
+		```
+		Children.ts
+		```TypeScript
+		import { Control, TemplateFunction, IControlOptions } from 'UI/Base';
+		import template = require('wml!Children');
+
+		class Children extends Control<IControlOptions> {
+		   public _template: TemplateFunction = template;
+
+		   public _revertText() {
+			  this._notify('textChanged', ['Reverted']);
+		   };
+		}
+
+		export = Children;
+		```
+	- Children.wml
+		```HTML
+		<div>
+			<div>
+				{{ _options.text }}
+			</div>
+			<div on:click="_revertText()">
+				Вернуть текст
+			</div>
+		</div>
+
+		```
+		Children.ts
+		```TypeScript
+		import { Control, TemplateFunction, IControlOptions } from 'UI/Base';
+		import template = require('wml!Children');
+
+		class Children extends Control<IControlOptions> {
+		   public _template: TemplateFunction = template;
+
+		   public _revertText() {
+			  this._notify('click', ['Reverted']);
+		   };
+		}
+
+		export = Children;
+		```
+	- `Children.wml`
+		```HTML
+		<div>
+			<div>
+				{{ _options.text }}
+			</div>
+			<div on:click="_revertText()">
+				Вернуть текст
+			</div>
+		</div>
+
+		```
+		Children.ts
+		```TypeScript
+		import { Control, TemplateFunction, IControlOptions } from 'UI/Base';
+		import template = require('wml!Children');
+
+		class Children extends Control<IControlOptions> {
+		   public _template: TemplateFunction = template;
+
+		   public _revertText() {
+			  this._notify('textChanged', ['Reverted']);
+		   };
+		}
+
+		export = Children;
+		```
+	- Children.wml
+		```HTML
+		<div>
+			<div>
+				{{ _options.text }}
+			</div>
+			<div on:click="_revertText()">
+				Вернуть текст
+			</div>
+		</div>
+
+		```
+		Children.ts
+		```TypeScript
+		import { Control, TemplateFunction, IControlOptions } from 'UI/Base';
+		import template = require('wml!Children');
+
+		class Children extends Control<IControlOptions> {
+		   public _template: TemplateFunction = template;
+
+		   public _revertText() {
+			  this._bind('click', ['Reverted']);
+		   };
+		}
+
+		export = Children;
+		```
+---
+13. В каком файле допущена ошибка при реализации синхронизации
+	- `Exapmle.wml`
+		```HTML
+		<div>
+			<div>
+				{{ _text }}
+			</div>
+			<div on:click="_changeText()">
+				Сменить текст
+			</div>
+			<Children bind:text="{{_text}}"/>
+		</div>
+		```
+	- Exapmle.ts
+		```TypeScript
+		import { Control, TemplateFunction, IControlOptions } from 'UI/Base';
+		import template = require('wml!Example');
+
+		class Example extends Control<IControlOptions> {
+		   public _template: TemplateFunction = template;
+		   private _text: string;
+
+		   public _beforeMount() {
+			 this._text = 'Mounted';
+		   };
+
+		   public _changeText() {
+			  this._text = 'Changed';
+		   };
+		}
+
+		export = Example;
+		```
+	- Children.wml
+		```HTML
+		<div>	
+			<div>
+				{{ _options.text }}
+			</div>
+			<div on:click="_revertText()">
+				Вернуть текст
+			</div>
+		</div>
+		```
+	- `Children.ts`
+		```TypeScript
+		import { Control, TemplateFunction, IControlOptions } from 'UI/Base';
+		import template = require('wml!Children');
+
+		class Children extends Control<IControlOptions> {
+		   public _template: TemplateFunction = template;
+
+		   public _revertText() {
+			  this._bind('textChanged', ['Reverted']);
+		   };
+		}
+
+		export = Children;
+		```
+---
+14. Какие элементы будут синхронизированы после выполнения _startSync() 
+	Example.wml
+	```HTML
+	<div>	
+		<div>
+			{{ _text }}
+		</div>
+		<div on:click="_changeText()">
+			Сменить текст
+		</div>
+		<Children bind:text="_text"/>
+	</div>
+
+	```
+
+---
+15.
