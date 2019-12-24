@@ -517,17 +517,94 @@ https://wi.sbis.ru/doc/platform/developmentapl/interface-development/ui-library/
 14. Какие элементы будут синхронизированы после выполнения _startSync() 
 	Example.wml
 	```HTML
-	<div>	
-		<div>
+	<div>
+		<div name="example">
 			{{ _text }}
 		</div>
-		<div on:click="_changeText()">
+		<div on:click="_startSync()">
 			Сменить текст
 		</div>
-		<Children bind:text="_text"/>
+		<Children text="{{ _text }}" name="children"/>
+		<Children1 _text="{{ _text }}" name="children1"/>
+		<Children2 _text="{{ text }}" name="children2"/>
 	</div>
-
 	```
+	Example.ts 
+	```TypeScript
+	import { Control, TemplateFunction, IControlOptions } from 'UI/Base';
+	import template = require('wml!Example');
 
+	class Example {
+		public _template: TemplateFunction = template;
+		private _text: string;		
+   		private text: string;
+
+		public _beforeMount() {
+			this._text = 'Mounted';
+		};
+
+		public _startSync() {
+			 this._text = 'Changed';
+			 this.text = 'Changed';
+		};
+	}
+	export = Example;
+	```
+	Children.wml
+	```HTML
+	<div>
+		{{ _options.text }}
+	</div>
+	```
+	Children.ts
+	```TypeScript
+	import { Control, TemplateFunction, IControlOptions } from 'UI/Base';
+	import template = require('wml!Children');
+
+	class Children extends Control<IControlOptions> {
+	   public _template: TemplateFunction = template;
+	}
+	export = Children;
+	```
+	Children1.wml
+	```HTML
+	<div>
+		{{ _options.text }}
+	</div>
+	```
+	Children1.ts
+	```TypeScript
+	import { Control, TemplateFunction, IControlOptions } from 'UI/Base';
+	import template = require('wml!Children1');
+
+	class Children extends Control<IControlOptions> {
+	   public _template: TemplateFunction = template;
+	}
+	export = Children;
+	```
+	Children2.wml
+	```HTML
+	<div>
+		{{ _options.text }}
+	</div>
+	```
+	Children2.ts
+	```TypeScript
+	import { Control, TemplateFunction, IControlOptions } from 'UI/Base';
+	import template = require('wml!Children2');
+
+	class Children extends Control<IControlOptions> {
+	   public _template: TemplateFunction = template;
+	}
+	export = Children;
+	```
+	
+	- example, children, children1, children2
+	- example, children, children1
+	- example, children, children2
+	- example, children2
+	- example, children1
+	- `example, children`
+	- в коде ошибка
 ---
 15.
